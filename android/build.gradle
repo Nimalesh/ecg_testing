@@ -1,0 +1,54 @@
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/sunfox-technologies/ecg_processor")
+            credentials {
+                username = "calidad_healthcare"
+                password = "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"
+            }
+        }
+
+        maven {
+            url = uri("https://maven.pkg.github.com/sunfox-technologies/spandan_ecg_android_sdk")
+            credentials {
+                username = "calidad_healthcare"
+                password = "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"
+            }
+        }
+
+        maven {
+            url = uri("https://maven.pkg.github.com/sunfox-technologies/sericom")
+            credentials {
+                username = "calidad_healthcare"
+                password = "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"
+            }
+        }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
